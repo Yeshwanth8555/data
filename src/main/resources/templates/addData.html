@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Data</title>
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("https://media.istockphoto.com/id/1337595776/photo/gray-abstract-background-white-bokeh-blurred-beautiful-shiny-lights-use-for-merry-christmas.webp?b=1&s=170667a&w=0&k=20&c=-o5yZiaTGjLtbU0p8JRa4xEfNL0BJbHxOMTrQ8cCLjM=");
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-align: center;
+            color: cadetblue;
+            font-style: italic;
+            align-content: center;
+            height: 96vh;
+            margin: 0;
+        }
+
+        .change {
+            background-color: rgba(255, 255, 255, 0.7);
+            margin-left: 30%;
+            margin-right: 30%;
+            padding: 20px;
+        }
+
+        .type {
+            width: 100px;
+            padding: 5px;
+            margin-right: 3%;
+        }
+
+        .dietType {
+            width: 100px;
+            padding: 5px;
+            border-right: 30px;
+            border-left: 30px;
+        }
+
+        input {
+            width: 30%;
+            padding: 5px;
+        }
+
+        button {
+            width: 15%;
+            padding: 3px;
+            border-radius: 20%;
+            background-color: grey;
+            margin-top: 10px;
+        }
+
+        button.data {
+            width: 15%;
+            padding: 23px;
+            border-radius: 20%;
+            background-color: white;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #37474F;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+    </style>
+</head>
+<body>
+<div class="change">
+    <h1>ZOO TYPE NAME DIET TYPE</h1>
+    <form id="myForm" action="add" method="post" onsubmit="return validateForm()">
+        <h2>Type</h2>
+        <select class="type" name="type">
+            <option value="animal" name="type">Animal</option>
+            <option value="Bird" name="type">Bird</option>
+            <option value="Human" name="type">Human</option>
+        </select>
+
+        <h2>Name</h2>
+        <input type="text" name="name" id="nameField">
+
+        <h2>Diet Type </h2>
+        <select class="dietType" name="dietType">
+            <option value="Carnivore" name="dietType">Carnivore</option>
+            <option value="Herbivore" name="dietType">Herbivore</option>
+            <option value="Omnivore" name="dietType">Omnivore</option>
+        </select><br><br>
+
+        <button type="submit" id="message"><h2>Save</h2></button>
+        <button type="button" class="data"><a href="getAll">Data</a></button>
+    </form>
+</div>
+<button class="back-button" onclick="goBack()"><a href="login">←</a></button>
+
+<script>
+    function goBack() {
+        window.history.back();
+        document.getElementById("myForm").reset();
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+    }
+
+    function validateForm() {
+        var nameValue = document.getElementById("nameField").value;
+        if (nameValue.trim() === "") {
+            alert("Name field cannot be empty");
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

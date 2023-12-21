@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Login</title>
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("https://media.istockphoto.com/id/1337595776/photo/gray-abstract-background-white-bokeh-blurred-beautiful-shiny-lights-use-for-merry-christmas.webp?b=1&s=170667a&w=0&k=20&c=-o5yZiaTGjLtbU0p8JRa4xEfNL0BJbHxOMTrQ8cCLjM=");
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-align: center;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 0;
+        }
+
+       .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #37474F;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+        form {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .ad {
+            color: darkgrey;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            margin-left: 3px;
+        }
+
+        button {
+            background-color: cadetblue;
+            width: 100%;
+            padding: 12px;
+            font-style: italic;
+            color: aliceblue;
+            border-style: inset;
+            cursor: pointer;
+        }
+
+        button a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .user {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<button class="back-button" onclick="goBack()">←</button>
+<form id="myForm">
+    <h1 class="ad">Admin Login</h1>
+    <h2>User Name</h2>
+    <input type="text" placeholder="Username" id="username">
+    <h2>Password</h2>
+    <input type="password" placeholder="Password" id="password">
+    <br>
+    <button type="button" onclick="login()">Log In</button>
+    <h2>or</h2>
+    <button type="button"><a href="user" class="user">User</a></button>
+</form>
+<script>
+    function login() {
+        var user = "user";
+        var pass = "user@123";
+        if (user == document.getElementById("username").value && pass == document.getElementById("password").value) {
+            document.location.href = '/addData';
+        } else {
+            window.alert("Username/Password incorrect");
+        }
+    }
+
+    function goBack() {
+      document.location.href ='/';
+    }
+</script>
+</body>
+</html>

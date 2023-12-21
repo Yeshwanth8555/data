@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Zoo Data Update</title>
+    <style>
+        body {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzqAYzlFqWA19jCs4QgPWYjenB8R7So6joHw&usqp=CAU");
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-align: center;
+            color: white;
+            font-style: italic;
+            align-content: center;
+            height: 96vh;
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: grey;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<form th:action="@{/updatedata}" method="post" th:object="${zoodata}">
+    <label for="id">ID:</label>
+    <input type="text" th:field="*{id}" id="id" readonly />
+
+    <label for="name">Name:</label>
+    <input type="text" th:field="*{name}" id="name"/>
+
+    <label for="type">Type:</label>
+    <select th:field="*{type}" id="type">
+        <option value="animal">Animal</option>
+        <option value="bird">Bird</option>
+        <option value="human">Human</option>
+    </select>
+
+    <label for="dietType">Diet Type:</label>
+    <select th:field="*{dietType}" id="dietType">
+        <option value="carnivore">Carnivore</option>
+        <option value="herbivore">Herbivore</option>
+        <option value="omnivore">Omnivore</option>
+    </select>
+
+    <button type="submit" id="updateButton">Update</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Display</title>
+    <script th:inline="javascript">
+        var carnivoreList = /*[[${carnivoreList}]]*/ [];
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .edit {
+            background-color: green;
+            color: #fff;
+            padding: 8px;
+            border: none;
+            cursor: pointer;
+            margin-right: 2px;
+        }
+
+        .delete {
+            background-color: red;
+            color: #fff;
+            padding: 8px;
+            border: none;
+            cursor: pointer;
+        }
+      .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #37474F;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+    </style>
+</head>
+<body>
+<div class="back-button" onclick="goBack()">←
+</div>
+<h1>Carnivore Data</h1>
+<form action="getCarnivore" method="get">
+    <table>
+        <thead>
+        <tr>
+            <th>NAME</th>
+            <th>TYPE</th>
+            <th>DIET TYPE</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="zooData : ${carnivoreList}">
+            <td th:text="${zooData.name}"></td>
+            <td th:text="${zooData.type}"></td>
+            <td th:text="${zooData.dietType}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <script th:inline="javascript">
+        console.log(carnivoreList);
+        function goBack() {
+       window.history.back();
+    }
+    </script>
+</form>
+</body>
+</html>
