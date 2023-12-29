@@ -54,41 +54,73 @@
             margin-left: 5px;
         }
 
-          .back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: #37474F;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    border: none;
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #37474F;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-button a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .filter-box {
+            margin-bottom: 10px;
+        }
+
+        .get-all-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .download-button {
+    padding: 10px;
+    background-color: #2196F3;
     color: white;
-    font-weight: bold;
-    font-size: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.back-button a {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+.download-button:hover {
+    background-color: #0b7dda;
 }
     </style>
 </head>
 <body>
-<div class="back-button" onclick="history.go(-1);">
-    <h2>←</h2>
+<div class="back-button" onclick="goBack(1);"><a href="user">←</a>
 </div>
-
+<div class="filter-box">
+    <select id="dietTypeFilter">
+        <option value="">All</option>
+        <option value="Carnivore" name="dietType">Carnivore</option>
+        <option value="Herbivore" name="dietType">Herbivore</option>
+        <option value="Omnivore" name="dietType">Omnivore</option>
+    </select>
+    <button class="get-all-button" onclick="filterData()">Get</button>
+</div>
 <h1>Data you requested</h1>
 <form action="getAllUser" method="get">
     <table>
@@ -97,7 +129,6 @@
             <th>NAME</th>
             <th>TYPE</th>
             <th>DIET TYPE</th>
-
         </tr>
         </thead>
         <tbody>
@@ -108,9 +139,55 @@
         </tr>
         </tbody>
     </table>
+    <div class="download-button-container">
+        <button class="download-button" onclick="downloadData()">Download</button>
+    </div>
+</form>
     <script th:inline="javascript">
         console.log(dataListUser);
+
+       function filterData() {
+    var dietTypeFilter = document.getElementById('dietTypeFilter').value;
+    console.log('Filtering data for diet type:', dietTypeFilter);
+
+
+    var filteredData = dataListUser.filter(function(zooData) {
+        return dietTypeFilter === '' || zooData.dietType === dietTypeFilter;
+    });
+
+    updateTable(filteredData);
+}
+function updateTable(data) {
+    var tableBody = document.querySelector('tbody');
+    tableBody.innerHTML = '';
+
+    
+    data.forEach(function(zooData) {
+        var row = tableBody.insertRow();
+        var nameCell = row.insertCell(0);
+        var typeCell = row.insertCell(1);
+        var dietTypeCell = row.insertCell(2);
+
+        nameCell.textContent = zooData.name;
+        typeCell.textContent = zooData.type;
+        dietTypeCell.textContent = zooData.dietType;
+    });
+}
+
+         function downloadData() {
+        var jsonData = JSON.stringify(dataListUser, null, 2);
+
+        var blob = new Blob([jsonData], { type: 'application/json' });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'data.json';
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
     </script>
-</form>
+
+
 </body>
 </html>

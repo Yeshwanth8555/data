@@ -69,16 +69,16 @@
 
     <label for="type">Type:</label>
     <select th:field="*{type}" id="type">
-        <option value="animal">Animal</option>
-        <option value="bird">Bird</option>
-        <option value="human">Human</option>
+        <option value="Animal" th:selected="${zoodata.type == 'Animal'}">Animal</option>
+        <option value="Bird" th:selected="${zoodata.type == 'Bird'}">Bird</option>
+        <option value="Human" th:selected="${zoodata.type == 'Human'}">Human</option>
     </select>
 
     <label for="dietType">Diet Type:</label>
     <select th:field="*{dietType}" id="dietType">
-        <option value="carnivore">Carnivore</option>
-        <option value="herbivore">Herbivore</option>
-        <option value="omnivore">Omnivore</option>
+        <option value="Carnivore" th:selected="${zoodata.dietType == 'Carnivore'}">Carnivore</option>
+        <option value="Herbivore" th:selected="${zoodata.dietType == 'Herbivore'}">Herbivore</option>
+        <option value="Omnivore" th:selected="${zoodata.dietType == 'Omnivore'}">Omnivore</option>
     </select>
 
     <button type="submit" id="updateButton">Update</button>

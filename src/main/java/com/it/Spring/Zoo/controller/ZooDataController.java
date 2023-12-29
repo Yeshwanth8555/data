@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.it.Spring.Zoo.service.ZooDataService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -41,58 +42,69 @@ public class ZooDataController {
     }
 
     @PostMapping("/add")
-    public String addZooData(@ModelAttribute ZooData zooData, Model model){
-        zooDataService.addZooData(zooData);
-        model.addAttribute("successMessage","Successfully saved the data!");
-        System.out.println(zooData);
-         return "redirect:/addData";
+    public String addZooData(RedirectAttributes redirectAttributes, ZooData zooData) {
+        String resultMessage = zooDataService.addZooData(zooData);
+        redirectAttributes.addFlashAttribute("message", resultMessage);
+        return "redirect:/addData";
     }
 
     @GetMapping("/getAll")
     public String getAll(Model model){
-        List<ZooData> list = zooDataService.zooDataListlist();
+        List<ZooData> list = zooDataService.zooDataList();
         model.addAttribute("dataList",list);
-        System.out.println(list);
+        return "display";
+    }
+
+    @GetMapping("/deleteAll")
+    public String deleteAll(){
+        zooDataRepository.deleteAll();
         return "display";
     }
 
     @GetMapping("/getAllUser")
     public String getAllUser(Model model) {
-        List<ZooData> list1 = zooDataService.zooDataListlist();
+        List<ZooData> list1 = zooDataService.zooDataList();
         model.addAttribute("dataListUser", list1);
-        System.out.println(list1);
+
         return "userDisplay";
     }
 
-    @GetMapping("/getCarnivore/{dietType}")
+    @GetMapping("/getDietType/{dietType}")
     public String dietType(@PathVariable("dietType") String dietType ,Model model){
         List<ZooData> listC = zooDataService.getListByDietType(dietType);
         model.addAttribute("carnivoreList",listC);
-        System.out.println(listC);
+
         return "dietType";
     }
 
     @PostMapping("/updatedata")
     public String updatedData(@ModelAttribute ZooData zooData){
-        System.out.println(zooData);
+
         zooDataService.updateDataByName(zooData);
 
         return "redirect:/getAll";
     }
 
     @GetMapping("/delete/{name}")
-    public String deleteOne(@PathVariable("name")String name) {
-        System.out.println(name);
+    public String deleteOne(@PathVariable("name") String name) {
+
         this.zooDataService.deleteByName(name);
         return "redirect:/getAll";
     }
 
     @GetMapping("/edit/{name}")
     public String getData(@PathVariable("name")String name, Model model) {
-        System.out.println(name);
+
         ZooData deletingData=zooDataRepository.findByName(name);
         model.addAttribute("zoodata", deletingData);
         return "update";
+    }
+    @PostMapping("/deleteSelected")
+    public void deleteSelectedData(@RequestBody List<String> dataToDelete) {
+        List<ZooData> selectedDataList = zooDataRepository.findAllByNameIn(dataToDelete);
+//        System.out.println("Received dataToDelete: " + dataToDelete);
+        zooDataRepository.deleteAll(selectedDataList);
+
     }
 
 }

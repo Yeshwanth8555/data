@@ -19,6 +19,9 @@ public class ZooData {
     }
 
     public ZooData(String name, String type, String dietType) {
+        this.name = name;
+        this.type = type;
+        this.dietType = dietType;
     }
 
     public String getId() {
@@ -55,7 +58,8 @@ public class ZooData {
 
     @Override
     public String toString() {
-        return "ZooController{" +
+        return "ZooData{" +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", dietType='" + dietType + '\'' +

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add Data</title>
     <style>
@@ -86,16 +86,20 @@
     justify-content: center;
     height: 100%;
 }
-
-    </style>
+       </style>
 </head>
 <body>
 <div class="change">
     <h1>ZOO TYPE NAME DIET TYPE</h1>
+
+    <th:block th:if="${message}">
+        <p style="color: green;"><span th:text="${message}"></span></p>
+    </th:block>
+
     <form id="myForm" action="add" method="post" onsubmit="return validateForm()">
         <h2>Type</h2>
         <select class="type" name="type">
-            <option value="animal" name="type">Animal</option>
+            <option value="Animal" name="type">Animal</option>
             <option value="Bird" name="type">Bird</option>
             <option value="Human" name="type">Human</option>
         </select>

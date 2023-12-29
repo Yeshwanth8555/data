@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/static/backbutton.css}">
     <title>Data Display</title>
     <script th:inline="javascript">
         var dataList = /*[[${dataList}]]*/ [];
     </script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -82,12 +85,71 @@
     justify-content: center;
     height: 100%;
 }
+        .delete-all-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #e53935;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+        input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.delete-all-button,
+.delete-selected-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #e53935;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.delete-selected-button {
+    top: 60px;
+}
+      .download-button-container {
+    text-align: center;
+    margin-top: 20px;
+    position: center;
+    bottom: 50px;
+    width: 100%;
+}
+
+.download-button {
+    padding: 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.download-button:hover {
+    background-color: #0b7dda;
+}
 
 
     </style>
 </head>
 <body>
+
 <div class="back-button" onclick="goBack()"><a href="addData">←</a>
+    <div class="delete-all-button" onclick="confirmDeleteAll()">Delete All</div>
+    <div class="delete-selected-button" onclick="deleteSelectedData()">Delete Selected</div>
+
+
+
 </div>
 
 <h1>Data you requested</h1>
@@ -102,21 +164,94 @@
         </thead>
         <tbody>
         <tr th:each="zooData : ${dataList}">
+            <td><input type="checkbox" name="selectedData" value="[[${zooData.name}]]"></td>
             <td th:text="${zooData.name}"></td>
             <td th:text="${zooData.type}"></td>
             <td th:text="${zooData.dietType}"></td>
             <td>
 
                <button type="submit" class="edit" ><a th:href="@{'/edit/'+${zooData.name}}">Edit</a></button>
-                <a > <button type="submit" class="delete" ><a th:href="@{'/delete/'+${zooData.name}}">Delete</a></button></a>
+                <button type="submit" class="delete" onclick="return confirm('Are you sure you want to delete this item?')">
+                    <a th:href="@{'/delete/'+${zooData.name}}">Delete</a>
+                </button>
+
+
             </td>
         </tr>
         </tbody>
     </table>
-    <script th:inline="javascript">
-        console.log(dataList);
+<div class="download-button-container">
+    <button class="download-button" onclick="downloadData()">Download</button>
+</div>
+<script th:inline="javascript">
+    console.log(dataList);
+    var dataList = /*[[${dataList}]]*/ [];
 
+    function confirmDeleteAll() {
+            if (confirm('Are you sure you want to delete all data?')) {
+                fetch('/deleteAll', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
 
-    </script>
+                        window.location.href = '/getAll';
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            }
+        }
+
+        function deleteSelectedData() {
+            var selectedData = document.querySelectorAll('input[name="selectedData"]:checked');
+            if (selectedData.length === 0) {
+                alert('Please select at least one item to delete.');
+                return;
+            }
+
+            if (confirm('Are you sure you want to delete selected data?')) {
+                var dataToDelete = Array.from(selectedData).map(checkbox => checkbox.value);
+                console.log(dataToDelete);
+                fetch('/deleteSelected', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            dataToDelete: dataToDelete
+                        }),
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            console.error('Failed to delete selected data. Server responded with:', response.statusText);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            }
+        }
+
+        function downloadData() {
+            var jsonData = JSON.stringify(dataList, null, 2);
+
+            var blob = new Blob([jsonData], { type: 'application/json' });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'data.json';
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+</script>
 </body>
 </html>
