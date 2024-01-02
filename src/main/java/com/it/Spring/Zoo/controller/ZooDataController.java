@@ -1,6 +1,8 @@
 package com.it.Spring.Zoo.controller;
 
+import com.it.Spring.Zoo.entity.DeletedZooData;
 import com.it.Spring.Zoo.entity.ZooData;
+import com.it.Spring.Zoo.repository.DeletedZooDataRepository;
 import com.it.Spring.Zoo.repository.ZooDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import com.it.Spring.Zoo.service.ZooDataService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -22,6 +25,9 @@ public class ZooDataController {
 
     @Autowired
     ZooDataRepository zooDataRepository;
+
+    @Autowired
+    DeletedZooDataRepository deletedZooDataRepository;
 
     @GetMapping("/")
     public String home(){
@@ -56,9 +62,14 @@ public class ZooDataController {
     }
 
     @GetMapping("/deleteAll")
-    public String deleteAll(){
-        zooDataRepository.deleteAll();
-        return "display";
+    public ResponseEntity<String> deleteAllAndMoveToAnotherCollection() {
+        zooDataService.deleteAllAndMoveToAnotherCollection();
+        return ResponseEntity.ok("All data deleted and moved to another collection successfully");
+    }
+    @PostMapping("/deleteSelected")
+    public ResponseEntity<String> deleteSelectedData(@RequestBody List<String> dataToDelete) {
+        zooDataService.deleteAndMoveToAnotherCollection(dataToDelete);
+        return ResponseEntity.ok("Selected data deleted and moved to another collection successfully");
     }
 
     @GetMapping("/getAllUser")
@@ -99,12 +110,15 @@ public class ZooDataController {
         model.addAttribute("zoodata", deletingData);
         return "update";
     }
-    @PostMapping("/deleteSelected")
-    public void deleteSelectedData(@RequestBody List<String> dataToDelete) {
-        List<ZooData> selectedDataList = zooDataRepository.findAllByNameIn(dataToDelete);
-//        System.out.println("Received dataToDelete: " + dataToDelete);
-        zooDataRepository.deleteAll(selectedDataList);
 
+
+
+
+    @GetMapping("/zoo")
+    public String getZooData(@RequestParam(required = false) String dietType, Model model) {
+        List<ZooData> dataListUser = zooDataService.getListByDietType(dietType);
+        model.addAttribute("dataListUser", dataListUser);
+        return "userDisplay";
     }
 
 }

@@ -110,7 +110,7 @@
     </style>
 </head>
 <body>
-<div class="back-button" onclick="goBack(1);"><a href="user">←</a>
+<div class="back-button" onclick="goBack();"><a href="user">←</a>
 </div>
 <div class="filter-box">
     <select id="dietTypeFilter">
@@ -161,7 +161,7 @@ function updateTable(data) {
     var tableBody = document.querySelector('tbody');
     tableBody.innerHTML = '';
 
-    
+
     data.forEach(function(zooData) {
         var row = tableBody.insertRow();
         var nameCell = row.insertCell(0);

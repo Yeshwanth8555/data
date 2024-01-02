@@ -16,4 +16,6 @@ public interface ZooDataRepository  extends MongoRepository<ZooData ,String> {
     List<ZooData> findByDietType(String dietType);
 
     List<ZooData> findAllByNameIn(List<String> dataToDelete);
+
+    List<ZooData> deleteByName(List<String> dataToDelete);
 }
