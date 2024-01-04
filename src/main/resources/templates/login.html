@@ -47,6 +47,9 @@
     justify-content: center;
     height: 100%;
 }
+ button:hover {
+            background-color: #45a049;
+        }
 
         form {
             background-color: rgba(0, 0, 0, 0.7);
@@ -115,11 +118,11 @@
 
             if (username === '' || password === '') {
                 errorMessageElement.innerText = 'Username and password are required. Please try again.';
-                showErrorForDuration(errorMessageElement, 5000); // Display error for 5 seconds
+                showErrorForDuration(errorMessageElement, 5000);
                 return false;
             } else {
                 errorMessageElement.innerText = 'Invalid username or password. Please try again.';
-                showErrorForDuration(errorMessageElement, 5000); // Display error for 5 seconds
+                showErrorForDuration(errorMessageElement, 5000);
                 return true;
             }
         }
