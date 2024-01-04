@@ -183,7 +183,7 @@
         </tbody>
     </table>
 <div class="download-button-container">
-    <button class="download-button" onclick="downloadData()">Download</button>
+    <button class="download-button" onclick="downloadSelectedData()">Download</button>
 </div>
 <script th:inline="javascript">
     console.log(dataList);
@@ -244,17 +244,45 @@
     }
 }
 
-function downloadData() {
+function downloadAllData() {
     var jsonData = JSON.stringify(dataList, null, 2);
+
     var blob = new Blob([jsonData], { type: 'application/json' });
     var link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.download = 'data.json';
+    link.download = 'all_data.json';
 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 }
+
+function downloadSelectedData() {
+    var selectedData = document.querySelectorAll('input[name="selectedData"]:checked');
+
+    if (selectedData.length === 0) {
+        // If no checkboxes are ticked, download all data
+        downloadAllData();
+        return;
+    }
+
+    var dataToDownload = Array.from(selectedData).map(checkbox => {
+        return dataList.find(item => item.name === checkbox.getAttribute('data-id'));
+    });
+
+    var jsonData = JSON.stringify(dataToDownload, null, 2);
+
+    var blob = new Blob([jsonData], { type: 'application/json' });
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'selected_data.json';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+
 </script>
 </body>
 </html>
