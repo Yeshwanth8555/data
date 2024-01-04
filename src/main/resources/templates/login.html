@@ -93,32 +93,47 @@
     </style>
 </head>
 <body>
-<button class="back-button" onclick="goBack()">←</button>
-<form id="myForm">
-    <h1 class="ad">Admin Login</h1>
-    <h2>User Name</h2>
-    <input type="text" placeholder="Username" id="username">
-    <h2>Password</h2>
-    <input type="password" placeholder="Password" id="password">
-    <br>
-    <button type="button" onclick="login()">Log In</button>
-    <h2>or</h2>
-    <button type="button"><a href="user" class="user">User</a></button>
-</form>
-<script>
-    function login() {
-        var user = "user";
-        var pass = "user@123";
-        if (user == document.getElementById("username").value && pass == document.getElementById("password").value) {
-            document.location.href = '/addData';
-        } else {
-            window.alert("Username/Password incorrect");
-        }
-    }
+<div class="login-form">
+    <p class="error-message" id="errorMessage"></p>
+    <form action="/login" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="/signUp">Signup</a></p>
+    <script>
+        function validateForm() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var errorMessageElement = document.getElementById('errorMessage');
 
-    function goBack() {
-      document.location.href ='/';
-    }
-</script>
+            if (username === '' || password === '') {
+                errorMessageElement.innerText = 'Username and password are required. Please try again.';
+                showErrorForDuration(errorMessageElement, 5000); // Display error for 5 seconds
+                return false;
+            } else {
+                errorMessageElement.innerText = 'Invalid username or password. Please try again.';
+                showErrorForDuration(errorMessageElement, 5000); // Display error for 5 seconds
+                return true;
+            }
+        }
+
+        function showErrorForDuration(element, duration) {
+            element.style.display = 'block';
+            setTimeout(function () {
+                element.style.display = 'none';
+            }, duration);
+        }
+    </script>
+</div>
+<button class="back-button" onclick="goBack()"><a href="/">←</a></button>
+
+
 </body>
 </html>

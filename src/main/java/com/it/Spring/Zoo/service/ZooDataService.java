@@ -1,8 +1,10 @@
 package com.it.Spring.Zoo.service;
 
 import com.it.Spring.Zoo.entity.DeletedZooData;
+import com.it.Spring.Zoo.entity.Transaction;
 import com.it.Spring.Zoo.entity.ZooData;
 import com.it.Spring.Zoo.repository.DeletedZooDataRepository;
+import com.it.Spring.Zoo.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,17 @@ public class ZooDataService {
 
     @Autowired
     DeletedZooDataRepository deletedZooDataRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
+
+
+    public void addData(Transaction transaction) {
+        transactionRepository.save(transaction);
+    }
+    public Optional<Transaction> findByUsernameAndPassword(String username, String password) {
+        return transactionRepository.findByUsernameAndPassword(username, password);
+    }
 
 
     public String addZooData(ZooData zooData) {

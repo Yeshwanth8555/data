@@ -1,8 +1,10 @@
 package com.it.Spring.Zoo.controller;
 
 import com.it.Spring.Zoo.entity.DeletedZooData;
+import com.it.Spring.Zoo.entity.Transaction;
 import com.it.Spring.Zoo.entity.ZooData;
 import com.it.Spring.Zoo.repository.DeletedZooDataRepository;
+import com.it.Spring.Zoo.repository.TransactionRepository;
 import com.it.Spring.Zoo.repository.ZooDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import com.it.Spring.Zoo.service.ZooDataService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -29,9 +32,17 @@ public class ZooDataController {
     @Autowired
     DeletedZooDataRepository deletedZooDataRepository;
 
+    @Autowired
+    private TransactionRepository transactionRepository;
+
+
     @GetMapping("/")
     public String home(){
         return "home";
+    }
+    @GetMapping("/signUp")
+    public String signup() {
+        return "signUp";
     }
     @GetMapping("/login")
     public String login(){
@@ -47,11 +58,32 @@ public class ZooDataController {
         return "user";
     }
 
+    @PostMapping("/signUpReload")
+    public String addTransaction(Transaction transaction) {
+        zooDataService.addData(transaction);
+        return "redirect:/signUp";
+    }
     @PostMapping("/add")
     public String addZooData(RedirectAttributes redirectAttributes, ZooData zooData) {
         String resultMessage = zooDataService.addZooData(zooData);
         redirectAttributes.addFlashAttribute("message", resultMessage);
         return "redirect:/addData";
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
+        System.out.println("Login request received. Username: " + username + ", Password: " + password);
+
+        Optional<Transaction> transaction = zooDataService.findByUsernameAndPassword(username, password);
+
+        if (transaction.isPresent()) {
+            System.out.println("Login successful");
+            return "addData";
+        } else {
+            System.out.println("Login failed");
+            model.addAttribute("error", "Invalid username or password");
+            return "login";
+        }
     }
 
     @GetMapping("/getAll")
