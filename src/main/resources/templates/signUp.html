@@ -55,34 +55,35 @@
         button:hover {
             background-color: #45a049;
         }
-          .back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: #37474F;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.back-button a {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #37474F;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-button a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -99,7 +100,8 @@
         </div>
         <div class="form-group">
             <label for="phone">Phone Number:</label>
-            <input type="number" id="phone" name="phone" required>
+            <input type="text" id="phone" name="phone" pattern="[0-9]{10}" required>
+            <small>Must have exactly 10 digits</small>
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
@@ -114,7 +116,6 @@
     <p>Already have an account? <a href="/login">Login</a></p>
 </div>
 <button class="back-button" onclick="goBack()"><a href="/">←</a></button>
-
 
 <script>
     function validateForm() {
