@@ -14,80 +14,100 @@
             align-content: center;
             height: 96vh;
             margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .change {
-            background-color: rgba(255, 255, 255, 0.7);
-            margin-left: 30%;
-            margin-right: 30%;
-            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            width: 60%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            color: #555;
+            margin-top: 15px;
+        }
+
+        select, input {
+            width: 60%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
 
         .type {
-            width: 100px;
-            padding: 5px;
-            margin-right: 3%;
+            width: 30%;
+            margin-right: 2%;
         }
 
         .dietType {
-            width: 100px;
-            padding: 5px;
-            border-right: 30px;
-            border-left: 30px;
-        }
-
-        input {
             width: 30%;
-            padding: 5px;
         }
 
         button {
-            width: 15%;
-            padding: 3px;
-            border-radius: 20%;
-            background-color: grey;
-            margin-top: 10px;
+            width: 10%;
+            padding: 10px;
+            border-radius: 20px;
+            background-color: #3498db;
+            color: #fff;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
         }
 
         button.data {
-            width: 15%;
-            padding: 23px;
-            border-radius: 20%;
-            background-color: white;
+            width: 30%;
+            padding: 15px;
+            border-radius: 20px;
+            background-color: #2ecc71;
+            color: #fff;
             margin-left: 10px;
-            margin-top: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #2980b9;
         }
 
         .back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: #37474F;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #37474F;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.back-button a {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-         button:hover {
-            background-color: #45a049;
+        .back-button a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
         }
     </style>
 </head>
@@ -119,17 +139,17 @@
 
         <button type="submit" id="message"><h2>Save</h2></button>
         <button type="button" class="data"><a href="/getAllUser">Data</a></button>
-<!--    </form>-->
+    </form>
 </div>
 <button class="back-button" onclick="goBack()"><a href="/">←</a></button>
 
 <script>
-<!--    function goBack() {-->
-<!--        window.history.back();-->
-<!--        document.getElementById("myForm").reset();-->
-<!--        document.getElementById("username").value = "";-->
-<!--        document.getElementById("password").value = "";-->
-<!--    }-->
+    function goBack() {
+        window.history.back();
+        document.getElementById("myForm").reset();
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+    }
 
     function validateForm() {
         var nameValue = document.getElementById("nameField").value;
