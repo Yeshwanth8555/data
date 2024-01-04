@@ -112,12 +112,12 @@
     <p>Don't have an account? <a href="/signUp">Signup</a></p>
     <script>
         function validateForm() {
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
+            var username = document.getElementById('password').value;
+            var password = document.getElementById('username').value;
             var errorMessageElement = document.getElementById('errorMessage');
 
-            if (username === '' || password === '') {
-                errorMessageElement.innerText = 'Username and password are required. Please try again.';
+            if (username === password|| password === username) {
+                errorMessageElement.innerText = 'Invalid Username or Password';
                 showErrorForDuration(errorMessageElement, 5000);
                 return false;
             } else {

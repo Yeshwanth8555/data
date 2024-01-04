@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Document</title>
+    <title>Add Data</title>
     <style>
         body {
             background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -9,31 +9,53 @@
             background-repeat: no-repeat;
             background-size: cover;
             text-align: center;
-            color: beige;
+            color: cadetblue;
             font-style: italic;
-            height: 97vh;
+            align-content: center;
+            height: 96vh;
             margin: 0;
+        }
+
+        .change {
+            background-color: rgba(255, 255, 255, 0.7);
+            margin-left: 30%;
+            margin-right: 30%;
             padding: 20px;
         }
 
+        .type {
+            width: 100px;
+            padding: 5px;
+            margin-right: 3%;
+        }
+
+        .dietType {
+            width: 100px;
+            padding: 5px;
+            border-right: 30px;
+            border-left: 30px;
+        }
+
+        input {
+            width: 30%;
+            padding: 5px;
+        }
+
         button {
+            width: 15%;
+            padding: 3px;
+            border-radius: 20%;
+            background-color: grey;
+            margin-top: 10px;
+        }
+
+        button.data {
+            width: 15%;
+            padding: 23px;
+            border-radius: 20%;
             background-color: white;
-            padding: 10px;
-            width: 150px;
-            font-style: italic;
-            color: black;
-            margin-top: 20px;
-            border: 2px solid white;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        button:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        .data {
-            margin-top: 40px;
+            margin-left: 10px;
+            margin-top: 10px;
         }
 
         .back-button {
@@ -64,21 +86,59 @@
     justify-content: center;
     height: 100%;
 }
- button:hover {
+         button:hover {
             background-color: #45a049;
         }
     </style>
 </head>
 <body>
+<div class="change">
+    <h1>ZOO TYPE NAME DIET TYPE</h1>
+
+    <th:block th:if="${message}">
+        <p style="color: green;"><span th:text="${message}"></span></p>
+    </th:block>
+
+    <form id="myForm" action="userAdd" method="post" onsubmit="return validateForm()">
+        <h2>Type</h2>
+        <select class="type" name="type">
+            <option value="Animal" name="type">Animal</option>
+            <option value="Bird" name="type">Bird</option>
+            <option value="Human" name="type">Human</option>
+        </select>
+
+        <h2>Name</h2>
+        <input type="text" name="name" id="nameField">
+
+        <h2>Diet Type </h2>
+        <select class="dietType" name="dietType">
+            <option value="Carnivore" name="dietType">Carnivore</option>
+            <option value="Herbivore" name="dietType">Herbivore</option>
+            <option value="Omnivore" name="dietType">Omnivore</option>
+        </select><br><br>
+
+        <button type="submit" id="message"><h2>Save</h2></button>
+        <button type="button" class="data"><a href="/getAllUser">Data</a></button>
+<!--    </form>-->
+</div>
 <button class="back-button" onclick="goBack()"><a href="/">←</a></button>
-<h1>Getting Data Based On DietType</h1>
-<!--<button type="button"><a href="getDietType/Carnivore">Carnivore</a></button>-->
-<!--<button type="button"><a href="getDietType/Herbivore">Herbivore</a></button>-->
-<!--<button type="button"><a href="getDietType/Omnivore">Omnivore</a></button><br>-->
-<button type="button" class="data"><a href="getAllUser">Data</a></button>
 
 <script>
+<!--    function goBack() {-->
+<!--        window.history.back();-->
+<!--        document.getElementById("myForm").reset();-->
+<!--        document.getElementById("username").value = "";-->
+<!--        document.getElementById("password").value = "";-->
+<!--    }-->
 
+    function validateForm() {
+        var nameValue = document.getElementById("nameField").value;
+        if (nameValue.trim() === "") {
+            alert("Name field cannot be empty");
+            return false;
+        }
+        return true;
+    }
 </script>
 </body>
 </html>

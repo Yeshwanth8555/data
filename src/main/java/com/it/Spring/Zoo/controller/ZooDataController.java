@@ -81,7 +81,7 @@ public class ZooDataController {
             return "addData";
         } else {
             System.out.println("Login failed");
-            model.addAttribute("error", "Invalid username or password");
+            model.addAttribute("errorMessage", "Invalid username or password");
             return "login";
         }
     }
@@ -91,6 +91,13 @@ public class ZooDataController {
         List<ZooData> list = zooDataService.zooDataList();
         model.addAttribute("dataList",list);
         return "display";
+    }
+
+    @PostMapping("/userAdd")
+    public String addUserZooData(RedirectAttributes redirectAttributes, ZooData zooData) {
+        String resultMessage = zooDataService.addZooData(zooData);
+        redirectAttributes.addFlashAttribute("message", resultMessage);
+        return "redirect:/user";
     }
 
     @GetMapping("/deleteAll")
