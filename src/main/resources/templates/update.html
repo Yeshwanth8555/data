@@ -5,7 +5,7 @@
     <title>Zoo Data Update</title>
     <style>
         body {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
                 url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzqAYzlFqWA19jCs4QgPWYjenB8R7So6joHw&usqp=CAU");
             background-repeat: no-repeat;
             background-size: cover;
@@ -15,7 +15,6 @@
             align-content: center;
             height: 96vh;
             margin: 0;
-
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
             margin: 0;
@@ -52,6 +51,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            margin-right: 5px; /* Add margin to separate buttons */
         }
 
         button:hover {
@@ -82,6 +82,13 @@
     </select>
 
     <button type="submit" id="updateButton">Update</button>
+    <button type="button" onclick="goBack()">Cancel</button>
 </form>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 </body>
 </html>
