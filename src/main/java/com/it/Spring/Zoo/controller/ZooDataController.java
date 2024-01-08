@@ -60,11 +60,13 @@ public class ZooDataController {
 
     @PostMapping("/signUpReload")
     public String addTransaction(Transaction transaction) {
+
         zooDataService.addData(transaction);
         return "redirect:/signUp";
     }
     @PostMapping("/add")
     public String addZooData(RedirectAttributes redirectAttributes, ZooData zooData) {
+
         String resultMessage = zooDataService.addZooData(zooData);
         redirectAttributes.addFlashAttribute("message", resultMessage);
         return "redirect:/addData";
@@ -72,8 +74,8 @@ public class ZooDataController {
 
     @PostMapping("/login")
     public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
-        System.out.println("Login request received. Username: " + username + ", Password: " + password);
 
+        System.out.println("Login request received. Username: " + username + ", Password: " + password);
         Optional<Transaction> transaction = zooDataService.findByUsernameAndPassword(username, password);
 
         if (transaction.isPresent()) {
@@ -88,6 +90,7 @@ public class ZooDataController {
 
     @GetMapping("/getAll")
     public String getAll(Model model){
+
         List<ZooData> list = zooDataService.zooDataList();
         model.addAttribute("dataList",list);
         return "display";
@@ -95,6 +98,7 @@ public class ZooDataController {
 
     @PostMapping("/userAdd")
     public String addUserZooData(RedirectAttributes redirectAttributes, ZooData zooData) {
+
         String resultMessage = zooDataService.addZooData(zooData);
         redirectAttributes.addFlashAttribute("message", resultMessage);
         return "redirect:/user";
@@ -102,28 +106,30 @@ public class ZooDataController {
 
     @GetMapping("/deleteAll")
     public ResponseEntity<String> deleteAllAndMoveToAnotherCollection() {
+
         zooDataService.deleteAllAndMoveToAnotherCollection();
         return ResponseEntity.ok("All data deleted and moved to another collection successfully");
     }
     @PostMapping("/deleteSelected")
     public ResponseEntity<String> deleteSelectedData(@RequestBody List<String> dataToDelete) {
+
         zooDataService.deleteAndMoveToAnotherCollection(dataToDelete);
         return ResponseEntity.ok("Selected data deleted and moved to another collection successfully");
     }
 
     @GetMapping("/getAllUser")
     public String getAllUser(Model model) {
+
         List<ZooData> list1 = zooDataService.zooDataList();
         model.addAttribute("dataListUser", list1);
-
         return "userDisplay";
     }
 
     @GetMapping("/getDietType/{dietType}")
     public String dietType(@PathVariable("dietType") String dietType ,Model model){
+
         List<ZooData> listC = zooDataService.getListByDietType(dietType);
         model.addAttribute("carnivoreList",listC);
-
         return "dietType";
     }
 
@@ -131,7 +137,6 @@ public class ZooDataController {
     public String updatedData(@ModelAttribute ZooData zooData){
 
         zooDataService.updateDataByName(zooData);
-
         return "redirect:/getAll";
     }
 
@@ -149,8 +154,6 @@ public class ZooDataController {
         model.addAttribute("zoodata", deletingData);
         return "update";
     }
-
-
 
 
     @GetMapping("/zoo")
